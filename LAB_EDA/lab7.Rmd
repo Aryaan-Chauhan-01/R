@@ -1,0 +1,74 @@
+---
+title: "LAB-7"
+author: "Aryaan_Chauhan_20BCE1214"
+date: '2023-02-01'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+#LAB work
+#K clustering
+```{r}
+trip_data=data.frame(Trip_Length=c(21,45,67,89,45,34,69),
+                     Max._Speed=c(51,48,49,55,50,45,54),
+                     Most_frequent_speed=c(50,45,49,50,50,45,50),
+                     Trip_Duration=c(100,90,98,110,110,90,140),
+                     Brakes=c(60,64,58,55,54,53,50),
+                     Idiling_time=c(4,5,6,3,6,5,4),
+                     Honking=c(6,7,5,7,8,6,5))
+summary(trip_data)
+km<-kmeans(trip_data,3)
+```
+Importing the package factoextra
+```{r}
+install.packages("factoextra")
+library(factoextra)
+fviz_cluster(km,data=trip_data)
+```
+#Logistic regression
+Data of mtcars
+```{r}
+my_data<-mtcars
+my_data
+```
+loading caTools package
+```{r}
+install.packages('caTools')
+library(caTools)
+```
+
+splitting data in training and testing data set
+```{r}
+split<-sample.split(my_data,SplitRatio = 0.8)
+split
+training<-subset(my_data,split==1)
+tetsing<-subset(my_data,split==0)
+```
+model building
+```{r}
+my_model<-glm(drat~cyl+disp,training,family="binomial")
+my_model
+```
